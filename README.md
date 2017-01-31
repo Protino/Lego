@@ -1,0 +1,2 @@
+# Make-your-app-material
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e1d78944ac7b4b6582a42a3fee4d6fe8)](https://www.codacy.com/app/gurupadmamadapur/Make-your-app-material?utm_source=github.com&utm_medium=referral&utm_content=Protino/Make-your-app-material&utm_campaign=badger)
