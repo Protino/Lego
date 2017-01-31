@@ -2,4 +2,7 @@
 .idea
 *.iml
 /build
+
+#Gradle related files
 /local.properties
+/.gradle
