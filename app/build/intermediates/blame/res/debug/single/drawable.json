@@ -28,10 +28,6 @@
         "source": "H:\\Android\\Workspace\\xyzreader\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.1\\res\\drawable\\abc_btn_check_material.xml"
     },
     {
-        "merged": "H:\\Android\\Workspace\\xyzreader\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\add_fab_background.xml",
-        "source": "H:\\Android\\Workspace\\xyzreader\\app\\src\\main\\res\\drawable\\add_fab_background.xml"
-    },
-    {
         "merged": "H:\\Android\\Workspace\\xyzreader\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_arrow_drop_right_black_24dp.xml",
         "source": "H:\\Android\\Workspace\\xyzreader\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.1\\res\\drawable\\abc_ic_arrow_drop_right_black_24dp.xml"
     },

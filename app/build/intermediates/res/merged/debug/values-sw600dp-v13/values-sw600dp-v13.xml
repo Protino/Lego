@@ -24,7 +24,7 @@
     <dimen name="detail_metabar_vert_padding">32dp</dimen>
     <dimen name="detail_photo_height">384dp</dimen>
     <dimen name="detail_title_text_size">42sp</dimen>
-    <dimen name="fab_margin">24dp</dimen>
+    <dimen name="keyline_1">24dp</dimen>
     <item format="float" name="detail_body_line_spacing_multiplier" type="fraction">1.3</item>
     <integer name="design_snackbar_text_max_lines">1</integer>
     <style name="Widget.Design.TabLayout" parent="Base.Widget.Design.TabLayout">
