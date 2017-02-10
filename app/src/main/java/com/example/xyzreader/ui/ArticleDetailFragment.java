@@ -2,24 +2,37 @@ package com.example.xyzreader.ui;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.graphics.Palette;
 import android.text.Html;
-import android.text.format.DateUtils;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+
+import butterknife.BindColor;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A fragment representing a single Article detail screen. This fragment is
@@ -28,15 +41,29 @@ import com.squareup.picasso.Picasso;
  */
 public class ArticleDetailFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
+
     public static final String ARG_ITEM_ID = "item_id";
     private static final String TAG = "ArticleDetailFragment";
-
-    private Cursor mCursor;
-    private long mItemId;
-    private View mRootView;
-
-    private ImageView mPhotoView;
-    private boolean mIsCard = false;
+    private static final String LOG_TAG = ArticleDetailFragment.class.getSimpleName();
+    private static final int BYLINE_THRESHOLD = 33;
+    //@formatter:off
+    @BindView(R.id.photo) public ImageView photoView;
+    @BindView(R.id.article_title) public TextView titleView;
+    @BindView(R.id.article_byline) public TextView bylineView;
+    @BindView(R.id.article_body) public TextView bodyView;
+    @BindView(R.id.app_bar_layout) public AppBarLayout appBarLayout;
+    @BindView(R.id.coordinator_layout) public CoordinatorLayout coordinatorLayout;
+    @BindView(R.id.share_fab) public FloatingActionButton shareFab;
+    @BindView(R.id.meta_bar) public LinearLayout metaBar;
+    @BindColor(R.color.material_grey) public int materialGrey;
+    @BindColor(R.color.accent) public int accent;
+    public boolean isDark = false;
+    @BindView(R.id.detailNestedScrollView) NestedScrollView nestedScrollView;
+    //@formatter:on
+    private View rootView;
+    private Cursor cursor;
+    private long itemId;
+    private boolean isCard = false;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -57,45 +84,26 @@ public class ArticleDetailFragment extends Fragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (getArguments().containsKey(ARG_ITEM_ID)) {
-            mItemId = getArguments().getLong(ARG_ITEM_ID);
+            itemId = getArguments().getLong(ARG_ITEM_ID);
         }
-
-        mIsCard = getResources().getBoolean(R.bool.detail_is_card);
+        isCard = getResources().getBoolean(R.bool.detail_is_card);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
-
-//        mScrollView = (ObservableScrollView) mRootView.findViewById(R.id.scrollview);
-//        mScrollView.setCallbacks(new ObservableScrollView.Callbacks() {
-//            @Override
-//            public void onScrollChanged() {
-//                mScrollY = mScrollView.getScrollY();
-//                getActivityCast().onUpButtonFloorChanged(mItemId, ArticleDetailFragment.this);
-//                mPhotoContainerView.setTranslationY((int) (mScrollY - mScrollY / PARALLAX_FACTOR));
-//                updateStatusBar();
-//            }
-//        });
-
-        mPhotoView = (ImageView) mRootView.findViewById(R.id.photo);
-
-
-        mRootView.findViewById(R.id.share_fab).setOnClickListener(new View.OnClickListener() {
+        rootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
+        ButterKnife.bind(this, rootView);
+        bindViews();
+        appBarLayout.setExpanded(false);
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
-            public void onClick(View view) {
-                startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(getActivity())
-                        .setType("text/plain")
-                        .setText("Some sample text")
-                        .getIntent(), getString(R.string.action_share)));
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
             }
         });
-
-        bindViews();
-        return mRootView;
+        return rootView;
     }
 
     @Override
@@ -108,86 +116,76 @@ public class ArticleDetailFragment extends Fragment implements
         // we do this in onActivityCreated.
         getLoaderManager().initLoader(0, null, this);
     }
-//Lifecycle end
+    //Lifecycle end
 
-
-//    private void updateStatusBar() {
-//        int color = 0;
-//        if (mPhotoView != null && mTopInset != 0 && mScrollY > 0) {
-//            float f = progress(mScrollY,
-//                    mStatusBarFullOpacityBottom - mTopInset * 3,
-//                    mStatusBarFullOpacityBottom - mTopInset);
-//            color = Color.argb((int) (255 * f),
-//                    (int) (Color.red(mMutedColor) * 0.9),
-//                    (int) (Color.green(mMutedColor) * 0.9),
-//                    (int) (Color.blue(mMutedColor) * 0.9));
-//        }
-//        mStatusBarColorDrawable.setColor(color);
-//        mDrawInsetsFrameLayout.setInsetBackground(mStatusBarColorDrawable);
-//    }
+    @OnClick(R.id.share_fab)
+    public void onClick() {
+        startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(getActivity())
+                .setType("text/plain")
+                .setText("Some sample text")
+                .getIntent(), getString(R.string.action_share)));
+    }
 
     private void bindViews() {
-        if (mRootView == null) {
+        if (rootView == null) {
             return;
         }
-
-        TextView titleView = (TextView) mRootView.findViewById(R.id.article_title);
-        TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
-        bylineView.setMovementMethod(new LinkMovementMethod());
-        TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
-
-        if (mCursor != null) {
-            mRootView.setAlpha(0);
-            mRootView.setVisibility(View.VISIBLE);
-            mRootView.animate().alpha(1);
-            titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
-            bylineView.setText(Html.fromHtml(
-                    DateUtils.getRelativeTimeSpanString(
-                            mCursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),
-                            System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
-                            DateUtils.FORMAT_ABBREV_ALL).toString()
-                            + " by <font color='#ffffff'>"
-                            + mCursor.getString(ArticleLoader.Query.AUTHOR)
-                            + "</font>"));
-            bodyView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY)));
+        if (cursor != null) {
+            rootView.setAlpha(0);
+            rootView.setVisibility(View.VISIBLE);
+            titleView.setText(cursor.getString(ArticleLoader.Query.TITLE));
+            bylineView.setText(formatByLine(Utils.getModifiedByline(cursor, getContext())));
+            bodyView.setText(Html.fromHtml(cursor.getString(ArticleLoader.Query.BODY)));
+            bodyView.setMovementMethod(LinkMovementMethod.getInstance());
+            photoView.setMaxHeight((int) (getContext().getResources().getDisplayMetrics().heightPixels * 0.8));
             Picasso.with(getContext())
-                    .load(mCursor.getString(ArticleLoader.Query.PHOTO_URL))
+                    .load(cursor.getString(ArticleLoader.Query.PHOTO_URL))
                     .placeholder(getContext().getResources().getDrawable(R.drawable.empty_detail))
-                    .into(mPhotoView);
-
-            /*
-            ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
-                    .get(mCursor.getString(ArticleLoader.Query.PHOTO_URL), new ImageLoader.ImageListener() {
+                    .into(photoView, new Callback() {
                         @Override
-                        public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
-                            Bitmap bitmap = imageContainer.getBitmap();
-                            if (bitmap != null) {
-                                Palette p = Palette.generate(bitmap, 12);
-                                mMutedColor = p.getDarkMutedColor(0xFF333333);
-                                mPhotoView.setImageBitmap(imageContainer.getBitmap());
-                                mRootView.findViewById(R.id.meta_bar)
-                                        .setBackgroundColor(mMutedColor);
-                                updateStatusBar();
-                            }
+                        public void onSuccess() {
+                            final Bitmap bitmap = ((BitmapDrawable) photoView.getDrawable()).getBitmap();
+                            Palette.from(bitmap)
+                                    .maximumColorCount(3)
+                                    .clearFilters()
+                                    .generate(new Palette.PaletteAsyncListener() {
+                                        @Override
+                                        public void onGenerated(Palette palette) {
+                                            @ColorUtils.Lightness int lightness = ColorUtils.isDark(palette);
+                                            if (lightness == ColorUtils.LIGHTNESS_UNKNOWN) {
+                                                isDark = ColorUtils.isDark(bitmap, bitmap.getWidth()/2, 0);
+                                            } else {
+                                                isDark = lightness == ColorUtils.IS_DARK;
+                                            }
+                                        }
+                                    });
                         }
 
                         @Override
-                        public void onErrorResponse(VolleyError volleyError) {
-
+                        public void onError() {
+                            Log.e(LOG_TAG, "onError: Couldn't load photo");
                         }
                     });
-                    */
+            rootView.animate().alpha(1);
+
         } else {
-            mRootView.setVisibility(View.GONE);
+            rootView.setVisibility(View.GONE);
             titleView.setText("N/A");
             bylineView.setText("N/A");
             bodyView.setText("N/A");
         }
     }
 
+    private String formatByLine(String modifiedByline) {
+        if (modifiedByline.length() > BYLINE_THRESHOLD) {
+            return new StringBuilder(modifiedByline).insert(modifiedByline.indexOf("by"), "\n").toString();
+        }
+        return modifiedByline;
+    }
+
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        return ArticleLoader.newInstanceForItemId(getActivity(), mItemId);
+        return ArticleLoader.newInstanceForItemId(getActivity(), itemId);
     }
 
     @Override
@@ -198,31 +196,18 @@ public class ArticleDetailFragment extends Fragment implements
             }
             return;
         }
-
-        mCursor = cursor;
-        if (mCursor != null && !mCursor.moveToFirst()) {
+        this.cursor = cursor;
+        if (this.cursor != null && !this.cursor.moveToFirst()) {
             Log.e(TAG, "Error reading item detail cursor");
-            mCursor.close();
-            mCursor = null;
+            this.cursor.close();
+            this.cursor = null;
         }
-
         bindViews();
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
-        mCursor = null;
+        cursor = null;
         bindViews();
     }
-
-//    public int getUpButtonFloor() {
-//        if (mPhotoContainerView == null || mPhotoView.getHeight() == 0) {
-//            return Integer.MAX_VALUE;
-//        }
-//
-//        // account for parallax
-//        return mIsCard
-//                ? (int) mPhotoContainerView.getTranslationY() + mPhotoView.getHeight() - mScrollY
-//                : mPhotoView.getHeight() - mScrollY;
-//    }
 }

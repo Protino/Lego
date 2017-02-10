@@ -17,7 +17,6 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.text.format.DateUtils;
 import android.util.SparseIntArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +59,6 @@ public class ArticleListActivity extends AppCompatActivity
             }
         }
     };
-
     //Lifecycle start
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,9 +105,7 @@ public class ArticleListActivity extends AppCompatActivity
         adapter.setHasStableIds(true);
         recyclerView.setAdapter(adapter);
         int columnCount = getResources().getInteger(R.integer.list_column_count);
-        StaggeredGridLayoutManager sglm =
-                new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(sglm);
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL));
     }
 
     @Override
@@ -132,8 +128,8 @@ public class ArticleListActivity extends AppCompatActivity
         public Adapter(Context context, Cursor cursor) {
             mCursor = cursor;
             this.context = context;
-            darkMutedColorMap = new SparseIntArray();
             materialGrey = context.getResources().getColor(R.color.material_grey);
+            darkMutedColorMap = new SparseIntArray();
         }
 
         @Override
@@ -152,13 +148,7 @@ public class ArticleListActivity extends AppCompatActivity
         public void onBindViewHolder(final ViewHolder holder, final int position) {
             mCursor.moveToPosition(position);
             holder.titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
-            holder.subtitleView.setText(
-                    DateUtils.getRelativeTimeSpanString(
-                            mCursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),
-                            System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
-                            DateUtils.FORMAT_ABBREV_ALL).toString()
-                            + " by "
-                            + mCursor.getString(ArticleLoader.Query.AUTHOR));
+            holder.subtitleView.setText(Utils.getModifiedByline(mCursor, context));
             final ImageView thumbnail = holder.thumbnailView;
             Picasso.with(context)
                     .load(mCursor.getString(ArticleLoader.Query.THUMB_URL))
@@ -171,7 +161,9 @@ public class ArticleListActivity extends AppCompatActivity
                                 Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
                                     @Override
                                     public void onGenerated(Palette palette) {
-                                        int color = palette.getDarkMutedColor(materialGrey);
+                                        int color = ColorUtils.scrimify(
+                                                palette.getDarkMutedColor(materialGrey),
+                                                true, 0.4f);
                                         darkMutedColorMap.put(position, color);
                                         holder.cardView.setCardBackgroundColor(color);
                                     }

@@ -9,9 +9,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.RemoteException;
+import android.support.v4.content.ContextCompat;
 import android.text.format.Time;
 import android.util.Log;
 
+import com.example.xyzreader.R;
 import com.example.xyzreader.remote.RemoteEndpointUtil;
 
 import org.json.JSONArray;
@@ -21,12 +23,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class UpdaterService extends IntentService {
-    private static final String TAG = "UpdaterService";
-
     public static final String BROADCAST_ACTION_STATE_CHANGE
             = "com.example.xyzreader.intent.action.STATE_CHANGE";
     public static final String EXTRA_REFRESHING
             = "com.example.xyzreader.intent.extra.REFRESHING";
+    private static final String TAG = "UpdaterService";
+    private static final String LOG_TAG = UpdaterService.class.getSimpleName();
+
 
     public UpdaterService() {
         super(TAG);
@@ -35,6 +38,8 @@ public class UpdaterService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         Time time = new Time();
+        final int primaryDarkColor = ContextCompat.getColor(this,
+                R.color.primary_dark);
 
         ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo ni = cm.getActiveNetworkInfo();
@@ -47,7 +52,7 @@ public class UpdaterService extends IntentService {
                 new Intent(BROADCAST_ACTION_STATE_CHANGE).putExtra(EXTRA_REFRESHING, true));
 
         // Don't even inspect the intent, we only do one thing, and that's fetch content.
-        ArrayList<ContentProviderOperation> cpo = new ArrayList<ContentProviderOperation>();
+        ArrayList<ContentProviderOperation> cpo = new ArrayList<>();
 
         Uri dirUri = ItemsContract.Items.buildDirUri();
 
@@ -57,19 +62,45 @@ public class UpdaterService extends IntentService {
         try {
             JSONArray array = RemoteEndpointUtil.fetchJsonArray();
             if (array == null) {
-                throw new JSONException("Invalid parsed item array" );
+                throw new JSONException("Invalid parsed item array");
             }
 
             for (int i = 0; i < array.length(); i++) {
                 ContentValues values = new ContentValues();
                 JSONObject object = array.getJSONObject(i);
-                values.put(ItemsContract.Items.SERVER_ID, object.getString("id" ));
-                values.put(ItemsContract.Items.AUTHOR, object.getString("author" ));
-                values.put(ItemsContract.Items.TITLE, object.getString("title" ));
-                values.put(ItemsContract.Items.BODY, object.getString("body" ));
-                values.put(ItemsContract.Items.THUMB_URL, object.getString("thumb" ));
-                values.put(ItemsContract.Items.PHOTO_URL, object.getString("photo" ));
-                values.put(ItemsContract.Items.ASPECT_RATIO, object.getString("aspect_ratio" ));
+                // TODO: 10-Feb-17 Needs workaround
+                /** The following is quite expensive at startup **/
+                /*
+                String thumbUrl = object.getString("thumb");
+
+                RequestCreator requestCreator = Picasso.with(this).load(thumbUrl);
+                try {
+                    Bitmap bitmap = requestCreator.get();
+                    Palette palette = Palette.from(bitmap)
+                            .generate();
+                    boolean isDark;
+                    int lightness = ColorUtils.isDark(palette);
+                    if (lightness == ColorUtils.LIGHTNESS_UNKNOWN) {
+                        isDark = ColorUtils.isDark(bitmap, bitmap.getWidth() / 2, 0);
+                    } else {
+                        isDark = lightness == ColorUtils.IS_DARK;
+                    }
+                    int darkColor = ColorUtils.scrimify(palette.getDarkMutedColor(primaryDarkColor),
+                            true, 0.4f);
+                    values.put(ItemsContract.Items.DARK_MUTED_COLOR, darkColor);
+                    values.put(ItemsContract.Items.IS_DARK, isDark);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.e(LOG_TAG, "onHandleIntent: Error fetching image - " + thumbUrl, e);
+                }*/
+
+                values.put(ItemsContract.Items.SERVER_ID, object.getString("id"));
+                values.put(ItemsContract.Items.AUTHOR, object.getString("author"));
+                values.put(ItemsContract.Items.TITLE, object.getString("title"));
+                values.put(ItemsContract.Items.BODY, object.getString("body"));
+                values.put(ItemsContract.Items.THUMB_URL, object.getString("thumb"));
+                values.put(ItemsContract.Items.PHOTO_URL, object.getString("photo"));
+                values.put(ItemsContract.Items.ASPECT_RATIO, object.getString("aspect_ratio"));
                 time.parse3339(object.getString("published_date"));
                 values.put(ItemsContract.Items.PUBLISHED_DATE, time.toMillis(false));
                 cpo.add(ContentProviderOperation.newInsert(dirUri).withValues(values).build());

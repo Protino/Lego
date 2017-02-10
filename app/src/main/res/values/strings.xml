@@ -7,8 +7,10 @@
     <string name="action_settings">Settings</string>
     <string name="action_share">Share</string>
 
-    <string name="up">Up</string>
+    <string name="up">Navigate back</string>
     <string name="share_string">Some sample text</string>
     <string name="photo">Article photo</string>
+
+    <string name="by_line" >%1$s by %2$s</string> <!-- example - Dec 12, 2013 by John Scott -->
 
 </resources>

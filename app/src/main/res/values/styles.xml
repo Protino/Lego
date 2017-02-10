@@ -5,6 +5,7 @@
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
         <item name="toolbarStyle">@style/Toolbar</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar"/>
@@ -12,7 +13,7 @@
 
     <style name="Toolbar" parent="Widget.AppCompat.Toolbar">
         <item name="android:background">@color/primary</item>
-        <item name="popupTheme">@style/Theme.AppCompat.Light</item>
+        <item name="popupTheme">@style/Theme.AppCompat.Light.NoActionBar</item>
     </style>
 
     <style name="AppTheme.Detail">

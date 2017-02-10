@@ -30,6 +30,8 @@ public class ArticleLoader extends CursorLoader {
                 ItemsContract.Items.PHOTO_URL,
                 ItemsContract.Items.ASPECT_RATIO,
                 ItemsContract.Items.BODY,
+                ItemsContract.Items.DARK_MUTED_COLOR,
+                ItemsContract.Items.IS_DARK
         };
 
         int _ID = 0;
@@ -40,5 +42,7 @@ public class ArticleLoader extends CursorLoader {
         int PHOTO_URL = 5;
         int ASPECT_RATIO = 6;
         int BODY = 7;
+        int DARK_MUTED_COLOR = 8;
+        int IS_DARK = 9;
     }
 }

@@ -8,16 +8,20 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.TypedValue;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 import com.example.xyzreader.data.ItemsContract;
 
+import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -30,6 +34,7 @@ public class ArticleDetailActivity extends AppCompatActivity
     //@formatter:off
     @BindView(R.id.pager) public ViewPager pager;
     @BindView(R.id.upCaret) public ImageView upCaret;
+    @BindDimen(R.dimen.keyline_1) public int keyLine;
     //@formatter:on
 
     private Cursor cursor;
@@ -40,9 +45,12 @@ public class ArticleDetailActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getSupportLoaderManager().initLoader(0, null, this);
+
         setContentView(R.layout.activity_article_detail);
         ButterKnife.bind(this);
-        getSupportLoaderManager().initLoader(0, null, this);
+        setUpCaretMargin();
         setUpPager();
         if (savedInstanceState == null) {
             if (getIntent() != null && getIntent().getData() != null) {
@@ -50,17 +58,23 @@ public class ArticleDetailActivity extends AppCompatActivity
             }
         }
     }
-
     //Lifecycle end
-    public void onUpCaretClick() {
-        onBackPressed();
+
+    private void setUpCaretMargin() {
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) upCaret.getLayoutParams();
+        params.setMargins(0, Utils.getStatusBarHeight(this), 0, 0);
+        upCaret.setLayoutParams(params);
+    }
+
+    public void updateUpCaret(boolean isDark) {
+        upCaret.setColorFilter(ContextCompat.getColor(this, isDark ? R.color.white : R.color.black));
+        upCaret.setVisibility(View.VISIBLE);
     }
 
     private void setUpPager() {
         mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(mPagerAdapter);
-        pager.setPageMargin((int) TypedValue
-                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics()));
+        pager.setPageMargin(Utils.dpToPx(1));
         pager.setPageMarginDrawable(new ColorDrawable(0x22000000));
         pager.setOnPageChangeListener(this);
     }
@@ -116,6 +130,10 @@ public class ArticleDetailActivity extends AppCompatActivity
         }
     }
 
+    public void onUpCaretClick(View view) {
+        onBackPressed();
+    }
+
     private class MyPagerAdapter extends FragmentStatePagerAdapter {
 
         public MyPagerAdapter(FragmentManager fm) {
@@ -126,6 +144,15 @@ public class ArticleDetailActivity extends AppCompatActivity
         public Fragment getItem(int position) {
             cursor.moveToPosition(position);
             return ArticleDetailFragment.newInstance(cursor.getLong(ArticleLoader.Query._ID));
+        }
+
+        @Override
+        public void setPrimaryItem(ViewGroup container, int position, Object object) {
+            super.setPrimaryItem(container, position, object);
+            ArticleDetailFragment fragment = (ArticleDetailFragment) object;
+            if(fragment!=null){
+                updateUpCaret(fragment.isDark);
+            }
         }
 
         @Override
