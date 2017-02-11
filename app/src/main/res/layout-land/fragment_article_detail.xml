@@ -1,0 +1,72 @@
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true">
+
+            <ImageView
+                android:id="@+id/photo"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/photo"
+                android:fitsSystemWindows="true"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/empty_detail"/>
+
+            <!-- Overlap top margin and side extra margin is determined programmatically-->
+            <RelativeLayout
+                android:id="@+id/detail_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/photo"
+                android:layout_gravity="bottom"
+                android:background="@color/cardview_dark_background"
+                android:elevation="@dimen/cardview_default_elevation">
+
+                <include
+                    android:id="@+id/meta_bar"
+                    layout="@layout/meta_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/article_body"
+                    style="?android:attr/textAppearanceMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/meta_bar"
+                    android:padding="@dimen/keyline"
+                    android:textColor="@color/white"/>
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/share_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/keyline"
+        android:contentDescription="@string/action_share"
+        android:src="@drawable/ic_share"
+        android:visibility="invisible"
+        app:elevation="@dimen/fab_elevation"
+        app:fabSize="normal"
+        app:pressedTranslationZ="@dimen/fab_elevation"/>
+
+</android.support.design.widget.CoordinatorLayout>

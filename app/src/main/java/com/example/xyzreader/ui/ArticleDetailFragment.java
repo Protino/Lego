@@ -5,15 +5,17 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.NestedScrollView;
+import android.support.v4.util.Pair;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -22,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.xyzreader.R;
@@ -51,19 +54,19 @@ public class ArticleDetailFragment extends Fragment implements
     @BindView(R.id.article_title) public TextView titleView;
     @BindView(R.id.article_byline) public TextView bylineView;
     @BindView(R.id.article_body) public TextView bodyView;
-    @BindView(R.id.app_bar_layout) public AppBarLayout appBarLayout;
-    @BindView(R.id.coordinator_layout) public CoordinatorLayout coordinatorLayout;
+    @Nullable @BindView(R.id.app_bar_layout) public AppBarLayout appBarLayout;
+    @Nullable @BindView(R.id.toolbar) public Toolbar toolbar;
+    @Nullable @BindView(R.id.detail_content) public RelativeLayout detailContent;
     @BindView(R.id.share_fab) public FloatingActionButton shareFab;
     @BindView(R.id.meta_bar) public LinearLayout metaBar;
     @BindColor(R.color.material_grey) public int materialGrey;
-    @BindColor(R.color.accent) public int accent;
     public boolean isDark = false;
-    @BindView(R.id.detailNestedScrollView) NestedScrollView nestedScrollView;
     //@formatter:on
     private View rootView;
     private Cursor cursor;
     private long itemId;
-    private boolean isCard = false;
+    private int overLapTopMargin;
+    private int extraSideMargin;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -87,7 +90,6 @@ public class ArticleDetailFragment extends Fragment implements
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             itemId = getArguments().getLong(ARG_ITEM_ID);
         }
-        isCard = getResources().getBoolean(R.bool.detail_is_card);
     }
 
     @Override
@@ -96,13 +98,21 @@ public class ArticleDetailFragment extends Fragment implements
         rootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
         ButterKnife.bind(this, rootView);
         bindViews();
-        appBarLayout.setExpanded(false);
-        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-
-            }
-        });
+        calculateMargins();
+        if (appBarLayout != null && toolbar != null) {
+            CollapsingToolbarLayout.LayoutParams params =
+                    new CollapsingToolbarLayout.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT, overLapTopMargin);
+            toolbar.setLayoutParams(params);
+            appBarLayout.setExpanded(false);
+        }
+        if (detailContent != null) {
+            RelativeLayout.LayoutParams params =
+                    new RelativeLayout.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(extraSideMargin, overLapTopMargin, extraSideMargin, 0);
+            detailContent.setLayoutParams(params);
+        }
         return rootView;
     }
 
@@ -117,6 +127,12 @@ public class ArticleDetailFragment extends Fragment implements
         getLoaderManager().initLoader(0, null, this);
     }
     //Lifecycle end
+
+    private void calculateMargins() {
+        Pair<Integer, Integer> pair = Utils.getScreenWidthAndHeight(getContext());
+        overLapTopMargin = (int) (pair.second * 0.4); // 40% of the height
+        extraSideMargin = (int) (pair.first * 0.2);  // 20% of the width
+    }
 
     @OnClick(R.id.share_fab)
     public void onClick() {
@@ -138,8 +154,9 @@ public class ArticleDetailFragment extends Fragment implements
             bodyView.setText(Html.fromHtml(cursor.getString(ArticleLoader.Query.BODY)));
             bodyView.setMovementMethod(LinkMovementMethod.getInstance());
             photoView.setMaxHeight((int) (getContext().getResources().getDisplayMetrics().heightPixels * 0.8));
+            final String photoUrl = cursor.getString(ArticleLoader.Query.PHOTO_URL);
             Picasso.with(getContext())
-                    .load(cursor.getString(ArticleLoader.Query.PHOTO_URL))
+                    .load(photoUrl)
                     .placeholder(getContext().getResources().getDrawable(R.drawable.empty_detail))
                     .into(photoView, new Callback() {
                         @Override
@@ -153,7 +170,7 @@ public class ArticleDetailFragment extends Fragment implements
                                         public void onGenerated(Palette palette) {
                                             @ColorUtils.Lightness int lightness = ColorUtils.isDark(palette);
                                             if (lightness == ColorUtils.LIGHTNESS_UNKNOWN) {
-                                                isDark = ColorUtils.isDark(bitmap, bitmap.getWidth()/2, 0);
+                                                isDark = ColorUtils.isDark(bitmap, bitmap.getWidth() / 2, 0);
                                             } else {
                                                 isDark = lightness == ColorUtils.IS_DARK;
                                             }
@@ -163,9 +180,10 @@ public class ArticleDetailFragment extends Fragment implements
 
                         @Override
                         public void onError() {
-                            Log.e(LOG_TAG, "onError: Couldn't load photo");
+                            Log.e(LOG_TAG, "onError: Couldn't load photo - " + photoUrl);
                         }
                     });
+            shareFab.setVisibility(View.VISIBLE);
             rootView.animate().alpha(1);
 
         } else {

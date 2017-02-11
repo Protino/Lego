@@ -11,6 +11,6 @@
     <string name="share_string">Some sample text</string>
     <string name="photo">Article photo</string>
 
-    <string name="by_line" >%1$s by %2$s</string> <!-- example - Dec 12, 2013 by John Scott -->
+    <string name="by_line" >%1$s by %2$s</string><!-- example - Dec 12, 2013 by John Scott -->
 
 </resources>

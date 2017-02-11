@@ -1,8 +1,4 @@
 <resources>
-    <!-- detail -->
-    <dimen name="detail_title_text_size">32sp</dimen>
-    <dimen name="detail_body_text_size">22sp</dimen>
-    <item name="detail_body_line_spacing_multiplier" format="float" type="fraction">1.25</item>
 
     <!-- fab dimens -->
     <dimen name="fab_elevation">6dp</dimen>
@@ -11,11 +7,26 @@
     <!-- appbar -->
     <dimen name="appbar_elevation">4dp</dimen>
 
+
     <!--base dimens -->
-    <dimen name="keyline_1">16dp</dimen>
+    <dimen name="keyline">16dp</dimen>
     <dimen name="base_grid_list_spacing">2dp</dimen>
-
     <dimen name="none">0dp</dimen>
-    <dimen name="z_fab_over_touchable_app_bar">9dp</dimen>
+    <dimen name="padding_normal">16dp</dimen>
 
+    <!-- Cardview grid item -->
+    <dimen name="card_primary_title_top_padding">24dp</dimen>
+    <dimen name="card_primary_title_bottom_padding">16dp</dimen>
+    <dimen name="card_default_padding">16dp</dimen>
+    <dimen name="card_supporting_text_bottom_padding">24dp</dimen>
+    <dimen name="card_supporting_text_top_padding">16dp</dimen>
+    <dimen name="card_primary_title_text_size">16sp</dimen>
+    <dimen name="card_subtitle_text_size">14sp</dimen>
+    <dimen name="toolbar_height">256dp</dimen>
+
+    <!-- meta-bar-->
+    <dimen name="detail_metabar_title_bottom_padding">16dp</dimen>
+    <dimen name="meta_bar_byline_text_size">16sp</dimen>
+    <dimen name="meta_bar_title_text_size">24sp</dimen>
+    <item  name="meta_bar_title_line_spacing_multiplier" format="float" type="dimen">0.9</item>
 </resources>

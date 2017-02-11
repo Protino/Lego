@@ -9,7 +9,6 @@
     <bool name="abc_config_actionMenuItemAllCaps">true</bool>
     <bool name="abc_config_closeDialogWhenTouchOutside">true</bool>
     <bool name="abc_config_showMenuShortcutsWhenKeyboardPresent">false</bool>
-    <bool name="detail_is_card">false</bool>
     <color name="abc_input_method_navigation_guard">@android:color/black</color>
     <color name="abc_search_url_text_normal">#7fa87f</color>
     <color name="abc_search_url_text_pressed">@android:color/black</color>
@@ -293,7 +292,6 @@
             <flag name="all" value="0x77"/>
         </attr></declare-styleable>
     <declare-styleable name="DesignTheme"><attr format="reference" name="bottomSheetDialogTheme"/><attr format="reference" name="bottomSheetStyle"/><attr format="color" name="textColorError"/></declare-styleable>
-    <declare-styleable name="DrawInsetsFrameLayout"><attr format="color|reference" name="insetBackground"/></declare-styleable>
     <declare-styleable name="DrawerArrowToggle"><attr format="color" name="color"/><attr format="boolean" name="spinBars"/><attr format="dimension" name="drawableSize"/><attr format="dimension" name="gapBetweenBars"/><attr format="dimension" name="arrowHeadLength"/><attr format="dimension" name="arrowShaftLength"/><attr format="dimension" name="barLength"/><attr format="dimension" name="thickness"/></declare-styleable>
     <declare-styleable name="FloatingActionButton"><attr name="backgroundTint"/><attr name="backgroundTintMode"/><attr format="color" name="rippleColor"/><attr name="fabSize">
             
@@ -478,6 +476,13 @@
     <dimen name="abc_text_size_title_material_toolbar">20dp</dimen>
     <dimen name="appbar_elevation">4dp</dimen>
     <dimen name="base_grid_list_spacing">2dp</dimen>
+    <dimen name="card_default_padding">16dp</dimen>
+    <dimen name="card_primary_title_bottom_padding">16dp</dimen>
+    <dimen name="card_primary_title_text_size">16sp</dimen>
+    <dimen name="card_primary_title_top_padding">24dp</dimen>
+    <dimen name="card_subtitle_text_size">14sp</dimen>
+    <dimen name="card_supporting_text_bottom_padding">24dp</dimen>
+    <dimen name="card_supporting_text_top_padding">16dp</dimen>
     <dimen name="cardview_compat_inset_shadow">1dp</dimen>
     <dimen name="cardview_default_elevation">2dp</dimen>
     <dimen name="cardview_default_radius">2dp</dimen>
@@ -519,16 +524,7 @@
     <dimen name="design_tab_scrollable_min_width">72dp</dimen>
     <dimen name="design_tab_text_size">14sp</dimen>
     <dimen name="design_tab_text_size_2line">12sp</dimen>
-    <dimen name="detail_body_bottom_margin">88dp</dimen>
-    <dimen name="detail_body_text_size">22sp</dimen>
-    <dimen name="detail_body_top_margin">16dp</dimen>
-    <dimen name="detail_card_max_width">10000dp</dimen>
-    <dimen name="detail_card_top_margin">@dimen/detail_photo_height</dimen>
-    <dimen name="detail_inner_horiz_margin">16dp</dimen>
-    <dimen name="detail_metabar_title_bottom_padding">4dp</dimen>
-    <dimen name="detail_metabar_vert_padding">16dp</dimen>
-    <dimen name="detail_photo_height">304dp</dimen>
-    <dimen name="detail_title_text_size">32sp</dimen>
+    <dimen name="detail_metabar_title_bottom_padding">16dp</dimen>
     <item format="float" name="disabled_alpha_material_dark" type="dimen">0.30</item>
     <item format="float" name="disabled_alpha_material_light" type="dimen">0.26</item>
     <dimen name="fab_elevation">6dp</dimen>
@@ -543,9 +539,10 @@
     <dimen name="item_touch_helper_max_drag_scroll_per_frame">20dp</dimen>
     <dimen name="item_touch_helper_swipe_escape_max_velocity">800dp</dimen>
     <dimen name="item_touch_helper_swipe_escape_velocity">120dp</dimen>
-    <dimen name="keyline_1">16dp</dimen>
-    <dimen name="list_side_margin">4dp</dimen>
-    <dimen name="list_toolbar_side_margin">0dp</dimen>
+    <dimen name="keyline">16dp</dimen>
+    <dimen name="meta_bar_byline_text_size">16sp</dimen>
+    <item format="float" name="meta_bar_title_line_spacing_multiplier" type="dimen">0.9</item>
+    <dimen name="meta_bar_title_text_size">24sp</dimen>
     <dimen name="none">0dp</dimen>
     <dimen name="notification_action_icon_size">32dp</dimen>
     <dimen name="notification_action_text_size">13sp</dimen>
@@ -562,10 +559,10 @@
     <dimen name="notification_subtext_size">13sp</dimen>
     <dimen name="notification_top_pad">10dp</dimen>
     <dimen name="notification_top_pad_large_text">5dp</dimen>
-    <dimen name="z_fab_over_touchable_app_bar">9dp</dimen>
+    <dimen name="padding_normal">16dp</dimen>
+    <dimen name="toolbar_height">256dp</dimen>
     <drawable name="notification_template_icon_bg">#3333B5E5</drawable>
     <drawable name="notification_template_icon_low_bg">#0cffffff</drawable>
-    <item format="float" name="detail_body_line_spacing_multiplier" type="fraction">1.25</item>
     <item name="action_bar_activity_content" type="id"/>
     <item name="action_bar_spinner" type="id"/>
     <item name="action_menu_divider" type="id"/>
@@ -586,6 +583,7 @@
     <integer name="cancel_button_image_alpha">127</integer>
     <integer name="design_snackbar_text_max_lines">2</integer>
     <integer name="list_column_count">2</integer>
+    <integer name="rapid_animation">120</integer>
     <integer name="status_bar_notification_info_maxnum">999</integer>
     <string name="abc_action_bar_home_description">Navigate home</string>
     <string name="abc_action_bar_home_description_format">%1$s, %2$s</string>

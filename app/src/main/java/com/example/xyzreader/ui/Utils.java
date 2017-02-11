@@ -16,9 +16,11 @@
 
 package com.example.xyzreader.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.support.v4.util.Pair;
 import android.text.format.DateUtils;
 import android.util.DisplayMetrics;
 
@@ -61,7 +63,6 @@ public class Utils {
         return 0;
     }
 
-
     /**
      * @param mCursor needed to fetch data
      * @param context needed to fetch string resources
@@ -72,5 +73,15 @@ public class Utils {
                 mCursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),
                 System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
                 DateUtils.FORMAT_ABBREV_ALL).toString(), mCursor.getString(ArticleLoader.Query.AUTHOR));
+    }
+
+    /**
+     * @param context needed to fetch display metrics
+     * @return <code>{@link Pair} width, height</code> height and width of device screen in px
+     */
+    public static Pair<Integer, Integer> getScreenWidthAndHeight(Context context) {
+        DisplayMetrics metrics = new DisplayMetrics();
+        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        return new Pair<>(metrics.widthPixels,metrics.heightPixels);
     }
 }

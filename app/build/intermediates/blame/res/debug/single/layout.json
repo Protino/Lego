@@ -232,6 +232,10 @@
         "source": "H:\\Android\\Workspace\\xyzreader\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.1\\res\\layout\\notification_template_media.xml"
     },
     {
+        "merged": "H:\\Android\\Workspace\\xyzreader\\app\\build\\intermediates\\res\\merged\\debug\\layout\\meta_bar.xml",
+        "source": "H:\\Android\\Workspace\\xyzreader\\app\\src\\main\\res\\layout\\meta_bar.xml"
+    },
+    {
         "merged": "H:\\Android\\Workspace\\xyzreader\\app\\build\\intermediates\\res\\merged\\debug\\layout\\design_bottom_sheet_dialog.xml",
         "source": "H:\\Android\\Workspace\\xyzreader\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\25.0.1\\res\\layout\\design_bottom_sheet_dialog.xml"
     },

@@ -34,7 +34,7 @@ public class ArticleDetailActivity extends AppCompatActivity
     //@formatter:off
     @BindView(R.id.pager) public ViewPager pager;
     @BindView(R.id.upCaret) public ImageView upCaret;
-    @BindDimen(R.dimen.keyline_1) public int keyLine;
+    @BindDimen(R.dimen.keyline) public int keyLine;
     //@formatter:on
 
     private Cursor cursor;
@@ -62,12 +62,15 @@ public class ArticleDetailActivity extends AppCompatActivity
 
     private void setUpCaretMargin() {
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) upCaret.getLayoutParams();
-        params.setMargins(0, Utils.getStatusBarHeight(this), 0, 0);
+        params.setMargins(0, Utils.getStatusBarHeight(this), keyLine, keyLine);
         upCaret.setLayoutParams(params);
     }
 
     public void updateUpCaret(boolean isDark) {
         upCaret.setColorFilter(ContextCompat.getColor(this, isDark ? R.color.white : R.color.black));
+        upCaret.animate()
+                .alpha(1f)
+                .setDuration(300);
         upCaret.setVisibility(View.VISIBLE);
     }
 
@@ -150,7 +153,7 @@ public class ArticleDetailActivity extends AppCompatActivity
         public void setPrimaryItem(ViewGroup container, int position, Object object) {
             super.setPrimaryItem(container, position, object);
             ArticleDetailFragment fragment = (ArticleDetailFragment) object;
-            if(fragment!=null){
+            if (fragment != null) {
                 updateUpCaret(fragment.isDark);
             }
         }

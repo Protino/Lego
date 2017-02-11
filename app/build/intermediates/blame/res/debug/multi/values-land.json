@@ -83,17 +83,17 @@
                     "startLine": 6,
                     "startColumn": 4,
                     "startOffset": 328,
-                    "endColumn": 57,
-                    "endOffset": 381
+                    "endColumn": 49,
+                    "endOffset": 373
                 },
                 "from": {
-                    "file": "H:\\Android\\Workspace\\xyzreader\\app\\src\\main\\res\\values-land\\macro_layout.xml",
+                    "file": "H:\\Android\\Workspace\\xyzreader\\app\\src\\main\\res\\values-land\\integers.xml",
                     "position": {
-                        "startLine": 3,
+                        "startLine": 2,
                         "startColumn": 4,
-                        "startOffset": 88,
-                        "endColumn": 57,
-                        "endOffset": 141
+                        "startOffset": 57,
+                        "endColumn": 49,
+                        "endOffset": 102
                     }
                 }
             },
@@ -101,48 +101,10 @@
                 "to": {
                     "startLine": 7,
                     "startColumn": 4,
-                    "startOffset": 386,
-                    "endColumn": 51,
-                    "endOffset": 433
-                },
-                "from": {
-                    "file": "H:\\Android\\Workspace\\xyzreader\\app\\src\\main\\res\\values-land\\macro_layout.xml",
-                    "position": {
-                        "startLine": 2,
-                        "startColumn": 4,
-                        "startOffset": 36,
-                        "endColumn": 51,
-                        "endOffset": 83
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 8,
-                    "startColumn": 4,
-                    "startOffset": 438,
-                    "endColumn": 49,
-                    "endOffset": 483
-                },
-                "from": {
-                    "file": "H:\\Android\\Workspace\\xyzreader\\app\\src\\main\\res\\values-land\\macro_layout.xml",
-                    "position": {
-                        "startLine": 4,
-                        "startColumn": 4,
-                        "startOffset": 146,
-                        "endColumn": 49,
-                        "endOffset": 191
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 9,
-                    "startColumn": 4,
-                    "startOffset": 488,
-                    "endLine": 12,
+                    "startOffset": 378,
+                    "endLine": 10,
                     "endColumn": 12,
-                    "endOffset": 665
+                    "endOffset": 555
                 },
                 "from": {
                     "file": "H:\\Android\\Workspace\\xyzreader\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\25.0.1\\res\\values-land\\values-land.xml",

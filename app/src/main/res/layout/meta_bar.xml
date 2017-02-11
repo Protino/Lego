@@ -1,0 +1,30 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/primary_dark"
+    android:orientation="vertical"
+    android:padding="@dimen/keyline">
+
+    <TextView
+        android:id="@+id/article_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed"
+        android:lineSpacingMultiplier="0.9"
+        android:paddingBottom="@dimen/detail_metabar_title_bottom_padding"
+        android:textColor="@color/white"
+        android:textSize="@dimen/meta_bar_title_text_size"
+        android:textStyle="bold"
+        tools:text="Mysteries of this universe will remain as mysteries. #That's right"/>
+
+    <TextView
+        android:id="@+id/article_byline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/light_grey"
+        android:textSize="@dimen/meta_bar_byline_text_size"
+        tools:text="36 Jan 2500, by Mr. Roboto"/>
+</LinearLayout>

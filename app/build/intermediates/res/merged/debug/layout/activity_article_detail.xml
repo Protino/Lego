@@ -1,14 +1,13 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="false">
+    android:layout_height="match_parent">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="false"/>
 
     <!-- Fake toolbar, because we are only interested in the back button -->
     <FrameLayout
@@ -16,18 +15,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        app:elevation="@dimen/z_fab_over_touchable_app_bar">
+        android:elevation="@dimen/appbar_elevation">
 
         <ImageButton
             android:id="@+id/upCaret"
-            android:layout_width="?actionBarSize"
-            android:layout_height="?actionBarSize"
-            android:layout_margin="@dimen/keyline_1"
+            android:layout_width="?android:actionBarSize"
+            android:layout_height="?android:actionBarSize"
             android:background="@drawable/mid_grey_ripple"
             android:contentDescription="@string/up"
             android:onClick="onUpCaretClick"
             android:src="@drawable/ic_arrow_back_black_24dp"
-            android:visibility="visible"/>
+            android:visibility="invisible"/>
 
     </FrameLayout>
 </FrameLayout>

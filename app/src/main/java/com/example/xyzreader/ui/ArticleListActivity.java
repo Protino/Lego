@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -30,6 +31,7 @@ import com.example.xyzreader.data.UpdaterService;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -47,6 +49,7 @@ public class ArticleListActivity extends AppCompatActivity
     @BindView(R.id.toolbar) public Toolbar toolbar;
     @BindView(R.id.swipe_refresh_layout) public SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.recycler_view) public RecyclerView recyclerView;
+    @BindDrawable(R.drawable.empty_detail) public Drawable placeholderDrawable;
     //@formatter:on
 
     private boolean isRefreshing = false;
@@ -59,6 +62,7 @@ public class ArticleListActivity extends AppCompatActivity
             }
         }
     };
+
     //Lifecycle start
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +156,7 @@ public class ArticleListActivity extends AppCompatActivity
             final ImageView thumbnail = holder.thumbnailView;
             Picasso.with(context)
                     .load(mCursor.getString(ArticleLoader.Query.THUMB_URL))
+                    .placeholder(placeholderDrawable)
                     .into(thumbnail, new Callback() {
                         @Override
                         public void onSuccess() {
