@@ -14,18 +14,13 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/listPreferredItemHeight"
             app:elevation="@dimen/none"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_gravity="center"
-                android:contentDescription="@string/app_name"
-                android:scaleType="center"
-                android:src="@drawable/logo"/>
+            app:titleTextAppearance="@style/Toolbar.TitleText"
+            app:theme="@style/Toolbar"
+            app:title="@string/app_name"
+            app:titleTextColor="@color/accent">
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 

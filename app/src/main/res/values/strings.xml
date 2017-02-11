@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">XYZ Reader</string>
+    <string name="app_name">Lego</string>
     <string name="welcome_xyz_reader">Welcome to XYZ Reader!</string>
 
     <string name="action_refresh">Refresh</string>

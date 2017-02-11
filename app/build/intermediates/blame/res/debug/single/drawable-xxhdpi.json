@@ -4,10 +4,6 @@
         "source": "H:\\Android\\Workspace\\xyzreader\\app\\src\\main\\res\\drawable-xxhdpi\\ic_arrow_back_black_24dp.png"
     },
     {
-        "merged": "H:\\Android\\Workspace\\xyzreader\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\logo.png",
-        "source": "H:\\Android\\Workspace\\xyzreader\\app\\src\\main\\res\\drawable-xxhdpi\\logo.png"
-    },
-    {
         "merged": "H:\\Android\\Workspace\\xyzreader\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\ic_share.png",
         "source": "H:\\Android\\Workspace\\xyzreader\\app\\src\\main\\res\\drawable-xxhdpi\\ic_share.png"
     }

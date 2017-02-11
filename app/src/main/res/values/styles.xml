@@ -8,7 +8,7 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
-    <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar"/>
+    <style name="BaseTheme" parent="Theme.AppCompat.NoActionBar"/>
 
 
     <style name="Toolbar" parent="Widget.AppCompat.Toolbar">
@@ -16,7 +16,7 @@
         <item name="popupTheme">@style/Theme.AppCompat.Light.NoActionBar</item>
     </style>
 
-    <style name="AppTheme.Detail">
-        <item name="android:statusBarColor">@android:color/transparent</item>
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">@dimen/toolbar_title_text_size</item>
     </style>
 </resources>

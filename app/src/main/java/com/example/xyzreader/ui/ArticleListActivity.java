@@ -6,8 +6,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -31,7 +32,7 @@ import com.example.xyzreader.data.UpdaterService;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import butterknife.BindDrawable;
+import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -49,7 +50,7 @@ public class ArticleListActivity extends AppCompatActivity
     @BindView(R.id.toolbar) public Toolbar toolbar;
     @BindView(R.id.swipe_refresh_layout) public SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.recycler_view) public RecyclerView recyclerView;
-    @BindDrawable(R.drawable.empty_detail) public Drawable placeholderDrawable;
+    @BindColor(R.color.photo_placeholder) public int placeholderDrawable;
     //@formatter:on
 
     private boolean isRefreshing = false;
@@ -70,6 +71,7 @@ public class ArticleListActivity extends AppCompatActivity
         setContentView(R.layout.activity_article_list);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+        setToolbarTitleTypeFace();
         swipeRefreshLayout.setOnRefreshListener(this);
         getSupportLoaderManager().initLoader(0, null, this);
         if (savedInstanceState == null) {
@@ -89,6 +91,18 @@ public class ArticleListActivity extends AppCompatActivity
         unregisterReceiver(refreshingReceiver);
     }
 //Lifecycle end
+
+    private void setToolbarTitleTypeFace() {
+        for (int i = 0; i < toolbar.getChildCount(); i++) {
+            View view = toolbar.getChildAt(i);
+            if (view instanceof TextView) {
+                TextView textView = (TextView) view;
+                Typeface pacifico = Typeface.createFromAsset(getAssets(), "fonts/Pacifico-Regular.ttf");
+                textView.setTypeface(pacifico);
+                return;
+            }
+        }
+    }
 
     private void refresh() {
         startService(new Intent(this, UpdaterService.class));
@@ -156,7 +170,7 @@ public class ArticleListActivity extends AppCompatActivity
             final ImageView thumbnail = holder.thumbnailView;
             Picasso.with(context)
                     .load(mCursor.getString(ArticleLoader.Query.THUMB_URL))
-                    .placeholder(placeholderDrawable)
+                    .placeholder(new ColorDrawable(placeholderDrawable))
                     .into(thumbnail, new Callback() {
                         @Override
                         public void onSuccess() {
@@ -168,7 +182,7 @@ public class ArticleListActivity extends AppCompatActivity
                                     public void onGenerated(Palette palette) {
                                         int color = ColorUtils.scrimify(
                                                 palette.getDarkMutedColor(materialGrey),
-                                                true, 0.4f);
+                                                true, 0.4f);  //40% darker
                                         darkMutedColorMap.put(position, color);
                                         holder.cardView.setCardBackgroundColor(color);
                                     }

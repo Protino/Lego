@@ -8,7 +8,7 @@ import static com.example.xyzreader.data.ItemsProvider.Tables;
 
 public class ItemsDatabase extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "xyzreader.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     public ItemsDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

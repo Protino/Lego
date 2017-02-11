@@ -68,9 +68,7 @@ public class ArticleDetailActivity extends AppCompatActivity
 
     public void updateUpCaret(boolean isDark) {
         upCaret.setColorFilter(ContextCompat.getColor(this, isDark ? R.color.white : R.color.black));
-        upCaret.animate()
-                .alpha(1f)
-                .setDuration(300);
+        upCaret.animate().alpha(1f).setDuration(300);
         upCaret.setVisibility(View.VISIBLE);
     }
 
@@ -117,9 +115,7 @@ public class ArticleDetailActivity extends AppCompatActivity
     @Override
     public void onPageScrollStateChanged(int state) {
         if (upCaret == null) return;
-        upCaret.animate()
-                .alpha((state == ViewPager.SCROLL_STATE_IDLE) ? 1f : 0f)
-                .setDuration(300);
+        upCaret.animate().alpha(state == ViewPager.SCROLL_STATE_IDLE ? 1f : 0f).setDuration(300);
     }
 
     @Override

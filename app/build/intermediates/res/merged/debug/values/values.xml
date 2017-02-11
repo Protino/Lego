@@ -13,7 +13,7 @@
     <color name="abc_search_url_text_normal">#7fa87f</color>
     <color name="abc_search_url_text_pressed">@android:color/black</color>
     <color name="abc_search_url_text_selected">@android:color/black</color>
-    <color name="accent">#00BCD4</color>
+    <color name="accent">#69F0AE</color>
     <color name="accent_material_dark">@color/material_deep_teal_200</color>
     <color name="accent_material_light">@color/material_deep_teal_500</color>
     <color name="background_floating_material_dark">@color/material_grey_800</color>
@@ -72,12 +72,12 @@
     <color name="notification_action_color_filter">#ffffffff</color>
     <color name="notification_icon_bg_color">#ff9e9e9e</color>
     <color name="notification_material_background_media_default_color">#ff424242</color>
-    <color name="photo_placeholder">#ccc</color>
-    <color name="primary">#607D8B</color>
-    <color name="primary_dark">#455A64</color>
+    <color name="photo_placeholder">@color/primary_dark</color>
+    <color name="primary">#424242</color>
+    <color name="primary_dark">#212121</color>
     <color name="primary_dark_material_dark">@android:color/black</color>
     <color name="primary_dark_material_light">@color/material_grey_600</color>
-    <color name="primary_light">#CFD8DC</color>
+    <color name="primary_light">#E0E0E0</color>
     <color name="primary_material_dark">@color/material_grey_900</color>
     <color name="primary_material_light">@color/material_grey_100</color>
     <color name="primary_text">#212121</color>
@@ -621,7 +621,7 @@
     <string name="action_refresh">Refresh</string>
     <string name="action_settings">Settings</string>
     <string name="action_share">Share</string>
-    <string name="app_name">XYZ Reader</string>
+    <string name="app_name">Lego</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
     <string name="bottom_sheet_behavior" translatable="false">android.support.design.widget.BottomSheetBehavior</string>
     <string name="by_line">%1$s by %2$s</string>
@@ -646,9 +646,6 @@
         <item name="colorAccent">@color/accent</item>
         <item name="toolbarStyle">@style/Toolbar</item>
         <item name="android:windowTranslucentStatus">true</item>
-    </style>
-    <style name="AppTheme.Detail">
-        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
     <style name="Base.AlertDialog.AppCompat" parent="android:Widget">
         <item name="android:layout">@layout/abc_alert_dialog_material</item>
@@ -1668,7 +1665,7 @@
         <item name="tabTextAppearance">@style/TextAppearance.Design.Tab</item>
         <item name="tabSelectedTextColor">?android:textColorPrimary</item>
     </style>
-    <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar"/>
+    <style name="BaseTheme" parent="Theme.AppCompat.NoActionBar"/>
     <style name="CardView" parent="Base.CardView">
     </style>
     <style name="CardView.Dark">
@@ -2000,6 +1997,9 @@
     <style name="Toolbar" parent="Widget.AppCompat.Toolbar">
         <item name="android:background">@color/primary</item>
         <item name="popupTheme">@style/Theme.AppCompat.Light.NoActionBar</item>
+    </style>
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">@dimen/toolbar_title_text_size</item>
     </style>
     <style name="Widget.AppCompat.ActionBar" parent="Base.Widget.AppCompat.ActionBar">
     </style>
