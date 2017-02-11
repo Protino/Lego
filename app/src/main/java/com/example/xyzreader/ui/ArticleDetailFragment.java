@@ -48,7 +48,6 @@ public class ArticleDetailFragment extends Fragment implements
     public static final String ARG_ITEM_ID = "item_id";
     private static final String TAG = "ArticleDetailFragment";
     private static final String LOG_TAG = ArticleDetailFragment.class.getSimpleName();
-    private static final int BYLINE_THRESHOLD = 33;
     //@formatter:off
     @BindView(R.id.photo) public ImageView photoView;
     @BindView(R.id.article_title) public TextView titleView;
@@ -61,6 +60,7 @@ public class ArticleDetailFragment extends Fragment implements
     @BindView(R.id.meta_bar) public LinearLayout metaBar;
     @BindColor(R.color.material_grey) public int materialGrey;
     public boolean isDark = false;
+    private int bylineThreshold = 33;
     //@formatter:on
     private View rootView;
     private Cursor cursor;
@@ -97,8 +97,8 @@ public class ArticleDetailFragment extends Fragment implements
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
         ButterKnife.bind(this, rootView);
-        bindViews();
         calculateMargins();
+        bindViews();
         if (appBarLayout != null && toolbar != null) {
             CollapsingToolbarLayout.LayoutParams params =
                     new CollapsingToolbarLayout.LayoutParams(
@@ -131,7 +131,10 @@ public class ArticleDetailFragment extends Fragment implements
     private void calculateMargins() {
         Pair<Integer, Integer> pair = Utils.getScreenWidthAndHeight(getContext());
         overLapTopMargin = (int) (pair.second * 0.4); // 40% of the height
-        extraSideMargin = (int) (pair.first * 0.2);  // 20% of the width
+        extraSideMargin = (int) (pair.first * 0.1);  // 10% of the width
+
+        // The following uses dark magic
+        bylineThreshold = (Utils.pxToDp(pair.first) -48)/9;
     }
 
     @OnClick(R.id.share_fab)
@@ -195,7 +198,7 @@ public class ArticleDetailFragment extends Fragment implements
     }
 
     private String formatByLine(String modifiedByline) {
-        if (modifiedByline.length() > BYLINE_THRESHOLD) {
+        if (modifiedByline.length() > bylineThreshold) {
             return new StringBuilder(modifiedByline).insert(modifiedByline.indexOf("by"), "\n").toString();
         }
         return modifiedByline;

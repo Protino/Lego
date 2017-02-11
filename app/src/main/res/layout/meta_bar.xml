@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-condensed"
-        android:lineSpacingMultiplier="0.9"
+        android:lineSpacingMultiplier="@dimen/title_line_spacing_multiplier"
         android:paddingBottom="@dimen/detail_metabar_title_bottom_padding"
         android:textColor="@color/white"
         android:textSize="@dimen/meta_bar_title_text_size"

@@ -28,5 +28,9 @@
     <dimen name="detail_metabar_title_bottom_padding">16dp</dimen>
     <dimen name="meta_bar_byline_text_size">16sp</dimen>
     <dimen name="meta_bar_title_text_size">24sp</dimen>
-    <item  name="meta_bar_title_line_spacing_multiplier" format="float" type="dimen">0.9</item>
+    <dimen name="article_body_text_size">20sp</dimen>
+    <item name="title_line_spacing_multiplier" format="float" type="dimen">0.9</item>
+
+    <!-- article-body-->
+    <item name="body_text_line_spacing_multiplier" format="float" type="dimen">1.2</item>
 </resources>
