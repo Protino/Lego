@@ -1,5 +1,7 @@
 <resources>
     <dimen name="keyline">24dp</dimen>
+    <dimen name="toolbar_padding">0dp</dimen>
+    <dimen name="toolbar_title_text_size">24sp</dimen>
 
     <!-- card component -->
     <dimen name="card_default_padding">24dp</dimen>

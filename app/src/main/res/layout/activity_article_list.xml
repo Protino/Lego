@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/listPreferredItemHeight"
             app:elevation="@dimen/none"
+            android:padding="@dimen/toolbar_padding"
             app:layout_scrollFlags="scroll|enterAlways"
             app:titleTextAppearance="@style/Toolbar.TitleText"
             app:theme="@style/Toolbar"

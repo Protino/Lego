@@ -1,21 +1,18 @@
-<android.support.design.widget.CoordinatorLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
         android:scrollbars="none">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fitsSystemWindows="true">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/photo"
@@ -24,7 +21,6 @@
                 android:adjustViewBounds="true"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/photo"
-                android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
                 tools:src="@drawable/empty_detail"/>
 
@@ -45,11 +41,11 @@
                     android:layout_height="wrap_content"/>
 
                 <TextView
-                    style="?android:attr/textAppearanceMedium"
                     android:id="@+id/article_body"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/meta_bar"
+                    android:fontFamily="serif"
                     android:padding="@dimen/keyline"
                     android:textColor="@color/white"
                     android:textSize="@dimen/article_body_text_size"/>
@@ -70,4 +66,4 @@
         app:fabSize="normal"
         app:pressedTranslationZ="@dimen/fab_elevation"/>
 
-</android.support.design.widget.CoordinatorLayout>
+</FrameLayout>

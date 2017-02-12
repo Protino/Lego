@@ -1,9 +1,11 @@
 package com.example.xyzreader.ui;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -32,7 +34,9 @@ import com.example.xyzreader.data.ArticleLoader;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import butterknife.BindBool;
 import butterknife.BindColor;
+import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -59,6 +63,9 @@ public class ArticleDetailFragment extends Fragment implements
     @BindView(R.id.share_fab) public FloatingActionButton shareFab;
     @BindView(R.id.meta_bar) public LinearLayout metaBar;
     @BindColor(R.color.material_grey) public int materialGrey;
+    @BindColor(R.color.primary_dark) public int primaryDark;
+    @BindDimen(R.dimen.keyline) public int keyLine;
+    @BindBool(R.bool.is_land) public boolean isLand;
     public boolean isDark = false;
     private int bylineThreshold = 33;
     //@formatter:on
@@ -99,18 +106,17 @@ public class ArticleDetailFragment extends Fragment implements
         ButterKnife.bind(this, rootView);
         calculateMargins();
         bindViews();
-        if (appBarLayout != null && toolbar != null) {
+        if (!isLand) {
             CollapsingToolbarLayout.LayoutParams params =
                     new CollapsingToolbarLayout.LayoutParams(
                             ViewGroup.LayoutParams.MATCH_PARENT, overLapTopMargin);
             toolbar.setLayoutParams(params);
             appBarLayout.setExpanded(false);
-        }
-        if (detailContent != null) {
+        } else {
             RelativeLayout.LayoutParams params =
                     new RelativeLayout.LayoutParams(
                             ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(extraSideMargin, overLapTopMargin, extraSideMargin, 0);
+            params.setMargins(extraSideMargin, overLapTopMargin, extraSideMargin, keyLine);
             detailContent.setLayoutParams(params);
         }
         return rootView;
@@ -134,7 +140,7 @@ public class ArticleDetailFragment extends Fragment implements
         extraSideMargin = (int) (pair.first * 0.1);  // 10% of the width
 
         // The following uses dark magic
-        bylineThreshold = (Utils.pxToDp(pair.first) -48)/9;
+        bylineThreshold = (Utils.pxToDp(pair.first) - 48) / 9;
     }
 
     @OnClick(R.id.share_fab)
@@ -166,7 +172,6 @@ public class ArticleDetailFragment extends Fragment implements
                         public void onSuccess() {
                             final Bitmap bitmap = ((BitmapDrawable) photoView.getDrawable()).getBitmap();
                             Palette.from(bitmap)
-                                    .maximumColorCount(3)
                                     .clearFilters()
                                     .generate(new Palette.PaletteAsyncListener() {
                                         @Override
@@ -176,6 +181,14 @@ public class ArticleDetailFragment extends Fragment implements
                                                 isDark = ColorUtils.isDark(bitmap, bitmap.getWidth() / 2, 0);
                                             } else {
                                                 isDark = lightness == ColorUtils.IS_DARK;
+                                            }
+                                            int extraDarkMutedColor = ColorUtils.scrimify(
+                                                    palette.getDarkMutedColor(primaryDark),
+                                                    true, 0.7f); //70% Darker
+                                            metaBar.setBackgroundColor(extraDarkMutedColor);
+                                            if (isLand && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                                ((Activity) getContext()).getWindow()
+                                                        .setStatusBarColor(extraDarkMutedColor);
                                             }
                                         }
                                     });

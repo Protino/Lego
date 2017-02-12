@@ -9,6 +9,7 @@
     <bool name="abc_config_actionMenuItemAllCaps">true</bool>
     <bool name="abc_config_closeDialogWhenTouchOutside">true</bool>
     <bool name="abc_config_showMenuShortcutsWhenKeyboardPresent">false</bool>
+    <bool name="is_land">false</bool>
     <color name="abc_input_method_navigation_guard">@android:color/black</color>
     <color name="abc_search_url_text_normal">#7fa87f</color>
     <color name="abc_search_url_text_pressed">@android:color/black</color>
@@ -475,7 +476,7 @@
     <dimen name="abc_text_size_title_material">20sp</dimen>
     <dimen name="abc_text_size_title_material_toolbar">20dp</dimen>
     <dimen name="appbar_elevation">4dp</dimen>
-    <dimen name="article_body_text_size">20sp</dimen>
+    <dimen name="article_body_text_size">18sp</dimen>
     <dimen name="base_grid_list_spacing">2dp</dimen>
     <item format="float" name="body_text_line_spacing_multiplier" type="dimen">1.2</item>
     <dimen name="card_default_padding">16dp</dimen>
@@ -529,6 +530,7 @@
     <dimen name="detail_metabar_title_bottom_padding">16dp</dimen>
     <item format="float" name="disabled_alpha_material_dark" type="dimen">0.30</item>
     <item format="float" name="disabled_alpha_material_light" type="dimen">0.26</item>
+    <dimen name="extra_article_top_padding">24dp</dimen>
     <dimen name="fab_elevation">6dp</dimen>
     <dimen name="fab_press_translation_z">6dp</dimen>
     <item format="float" name="highlight_alpha_material_colored" type="dimen">0.26</item>
@@ -563,6 +565,8 @@
     <dimen name="padding_normal">16dp</dimen>
     <item format="float" name="title_line_spacing_multiplier" type="dimen">0.9</item>
     <dimen name="toolbar_height">256dp</dimen>
+    <dimen name="toolbar_padding">8dp</dimen>
+    <dimen name="toolbar_title_text_size">20sp</dimen>
     <drawable name="notification_template_icon_bg">#3333B5E5</drawable>
     <drawable name="notification_template_icon_low_bg">#0cffffff</drawable>
     <item name="action_bar_activity_content" type="id"/>
