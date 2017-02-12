@@ -1,10 +1,10 @@
 package com.example.xyzreader.ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,6 +24,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -33,6 +36,8 @@ import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import butterknife.BindBool;
 import butterknife.BindColor;
@@ -111,7 +116,6 @@ public class ArticleDetailFragment extends Fragment implements
                     new CollapsingToolbarLayout.LayoutParams(
                             ViewGroup.LayoutParams.MATCH_PARENT, overLapTopMargin);
             toolbar.setLayoutParams(params);
-            appBarLayout.setExpanded(false);
         } else {
             RelativeLayout.LayoutParams params =
                     new RelativeLayout.LayoutParams(
@@ -156,7 +160,6 @@ public class ArticleDetailFragment extends Fragment implements
             return;
         }
         if (cursor != null) {
-            rootView.setAlpha(0);
             rootView.setVisibility(View.VISIBLE);
             titleView.setText(cursor.getString(ArticleLoader.Query.TITLE));
             bylineView.setText(formatByLine(Utils.getModifiedByline(cursor, getContext())));
@@ -164,12 +167,16 @@ public class ArticleDetailFragment extends Fragment implements
             bodyView.setMovementMethod(LinkMovementMethod.getInstance());
             photoView.setMaxHeight((int) (getContext().getResources().getDisplayMetrics().heightPixels * 0.8));
             final String photoUrl = cursor.getString(ArticleLoader.Query.PHOTO_URL);
+            final AtomicBoolean playAnim = new AtomicBoolean();
             Picasso.with(getContext())
                     .load(photoUrl)
-                    .placeholder(getContext().getResources().getDrawable(R.drawable.empty_detail))
+                    .placeholder(new ColorDrawable(primaryDark))
                     .into(photoView, new Callback() {
                         @Override
                         public void onSuccess() {
+                            if (playAnim.get()) {
+                                playAnimation(photoView);
+                            }
                             final Bitmap bitmap = ((BitmapDrawable) photoView.getDrawable()).getBitmap();
                             Palette.from(bitmap)
                                     .clearFilters()
@@ -187,8 +194,10 @@ public class ArticleDetailFragment extends Fragment implements
                                                     true, 0.7f); //70% Darker
                                             metaBar.setBackgroundColor(extraDarkMutedColor);
                                             if (isLand && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                                ((Activity) getContext()).getWindow()
-                                                        .setStatusBarColor(extraDarkMutedColor);
+                                                if (getActivity() != null) {
+                                                    (getActivity()).getWindow()
+                                                            .setStatusBarColor(extraDarkMutedColor);
+                                                }
                                             }
                                         }
                                     });
@@ -199,15 +208,22 @@ public class ArticleDetailFragment extends Fragment implements
                             Log.e(LOG_TAG, "onError: Couldn't load photo - " + photoUrl);
                         }
                     });
+            playAnim.set(false);
             shareFab.setVisibility(View.VISIBLE);
-            rootView.animate().alpha(1);
-
+            getActivity().supportStartPostponedEnterTransition();
+            if (appBarLayout != null) {
+                appBarLayout.setExpanded(false, true);
+            }
         } else {
             rootView.setVisibility(View.GONE);
-            titleView.setText("N/A");
-            bylineView.setText("N/A");
-            bodyView.setText("N/A");
         }
+    }
+
+    private void playAnimation(ImageView photoView) {
+        Animation fadeOut = new AlphaAnimation(0, 1);
+        fadeOut.setInterpolator(new AccelerateInterpolator());
+        fadeOut.setDuration(500);
+        photoView.startAnimation(fadeOut);
     }
 
     private String formatByLine(String modifiedByline) {

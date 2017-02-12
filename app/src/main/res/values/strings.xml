@@ -1,7 +1,7 @@
 <resources>
 
     <string name="app_name">Lego</string>
-    <string name="welcome_xyz_reader">Welcome to XYZ Reader!</string>
+    <string name="welcome_lego_reader">Welcome to Lego!</string>
 
     <string name="action_refresh">Refresh</string>
     <string name="action_settings">Settings</string>
@@ -11,6 +11,5 @@
     <string name="share_string">Some sample text</string>
     <string name="photo">Article photo</string>
 
-    <string name="by_line" >%1$s by %2$s</string><!-- example - Dec 12, 2013 by John Scott -->
-
+    <string name="by_line">%1$s by %2$s</string><!-- example - Dec 12, 2013 by John Scott -->
 </resources>

@@ -12,10 +12,16 @@
         <item name="android:textColorSecondary">@color/secondary_text</item>
         <item name="android:divider">@color/divider</item>
         <item name="toolbarStyle">@style/Toolbar</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowActivityTransitions">true</item>
     </style>
-    <style name="AppTheme.Detail" parent="AppTheme">
+    <style name="AppTheme.Detail" parent="AppTheme.Detail.Base">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+    <style name="AppTheme.Detail.Base" parent="AppTheme">
+        <item name="android:windowEnterTransition">@transition/details_window_transition</item>
+        <item name="android:windowExitTransition">@transition/details_window_transition</item>
     </style>
     <style name="Base.TextAppearance.AppCompat" parent="android:TextAppearance.Material"/>
     <style name="Base.TextAppearance.AppCompat.Body1" parent="android:TextAppearance.Material.Body1"/>

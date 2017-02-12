@@ -21,6 +21,7 @@ import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 import com.example.xyzreader.data.ItemsContract;
 
+import butterknife.BindBool;
 import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,8 +36,8 @@ public class ArticleDetailActivity extends AppCompatActivity
     @BindView(R.id.pager) public ViewPager pager;
     @BindView(R.id.upCaret) public ImageView upCaret;
     @BindDimen(R.dimen.keyline) public int keyLine;
+    @BindBool(R.bool.is_land) public boolean isLand;
     //@formatter:on
-
     private Cursor cursor;
     private long startId;
     private MyPagerAdapter mPagerAdapter;
@@ -57,19 +58,20 @@ public class ArticleDetailActivity extends AppCompatActivity
                 startId = ItemsContract.Items.getItemId(getIntent().getData());
             }
         }
+        supportPostponeEnterTransition();
     }
     //Lifecycle end
 
     private void setUpCaretMargin() {
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) upCaret.getLayoutParams();
-        params.setMargins(0, Utils.getStatusBarHeight(this), keyLine, keyLine);
+        params.setMargins(0, isLand ? 0 : Utils.getStatusBarHeight(this), keyLine, keyLine);
         upCaret.setLayoutParams(params);
     }
 
     public void updateUpCaret(boolean isDark) {
         upCaret.setColorFilter(ContextCompat.getColor(this, isDark ? R.color.white : R.color.black));
-        upCaret.animate().alpha(1f).setDuration(300);
         upCaret.setVisibility(View.VISIBLE);
+        upCaret.animate().alpha(1f).setDuration(300);
     }
 
     private void setUpPager() {

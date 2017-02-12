@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.support.v4.util.Pair;
+import android.support.v4.view.GravityCompat;
 import android.text.format.DateUtils;
 import android.util.DisplayMetrics;
 
@@ -55,6 +56,7 @@ public class Utils {
      * @param context {@link Context} needed to fetch resources
      * @return height of status bar of current device
      */
+    @android.support.annotation.Px
     public static int getStatusBarHeight(Context context) {
         int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0) {
@@ -82,6 +84,15 @@ public class Utils {
     public static Pair<Integer, Integer> getScreenWidthAndHeight(Context context) {
         DisplayMetrics metrics = new DisplayMetrics();
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        return new Pair<>(metrics.widthPixels,metrics.heightPixels);
+        return new Pair<>(metrics.widthPixels, metrics.heightPixels);
+    }
+
+    /**
+     * @param direction {@link android.view.Gravity#START} or {@link android.view.Gravity#END}
+     * @param context {@link Context} to fetch current layoutDirection
+     * @return appropriate {@link android.view.Gravity#LEFT} or {@link android.view.Gravity#RIGHT}
+     */
+    public static int resolveDirection(int direction, Context context) {
+        return GravityCompat.getAbsoluteGravity(direction, context.getResources().getConfiguration().getLayoutDirection());
     }
 }

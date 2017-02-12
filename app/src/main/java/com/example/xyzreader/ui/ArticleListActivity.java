@@ -10,6 +10,8 @@ import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -136,8 +138,7 @@ public class ArticleListActivity extends AppCompatActivity
         refresh();
     }
 
-    private class Adapter extends RecyclerView.Adapter<ViewHolder> {
-        private final String LOG_TAG = Adapter.class.getSimpleName();
+    public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         private final int materialGrey;
         private Cursor mCursor;
         private Context context;
@@ -204,25 +205,30 @@ public class ArticleListActivity extends AppCompatActivity
         public int getItemCount() {
             return mCursor.getCount();
         }
-    }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        //@formatter:off
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            //@formatter:off
         @BindView(R.id.list_item) public CardView cardView;
         @BindView(R.id.thumbnail) public ImageView thumbnailView;
         @BindView(R.id.article_title) public TextView titleView;
         @BindView(R.id.article_subtitle) public TextView subtitleView;
         //@formatter:on
 
-        public ViewHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
-        }
+            public ViewHolder(View view) {
+                super(view);
+                ButterKnife.bind(this, view);
+            }
 
-        @OnClick(R.id.list_item)
-        public void onClick() {
-            startActivity(new Intent(Intent.ACTION_VIEW,
-                    ItemsContract.Items.buildItemUri(getItemId())));
+            @OnClick(R.id.list_item)
+            public void onClick() {
+                Intent intent = new Intent(Intent.ACTION_VIEW,
+                        ItemsContract.Items.buildItemUri(getItemId()));
+                ActivityOptionsCompat options =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(
+                                ArticleListActivity.this);
+                ActivityCompat.startActivity(context, intent, options.toBundle());
+            }
         }
     }
+
 }
