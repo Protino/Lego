@@ -20,9 +20,9 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/photo"
-                android:scaleType="centerCrop"
                 tools:src="@drawable/empty_detail"/>
 
             <!-- Overlap top margin and side extra margin is determined programmatically-->

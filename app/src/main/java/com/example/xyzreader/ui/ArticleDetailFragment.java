@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -37,11 +37,10 @@ import com.example.xyzreader.data.ArticleLoader;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import butterknife.BindBool;
 import butterknife.BindColor;
 import butterknife.BindDimen;
+import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -71,6 +70,7 @@ public class ArticleDetailFragment extends Fragment implements
     @BindColor(R.color.primary_dark) public int primaryDark;
     @BindDimen(R.dimen.keyline) public int keyLine;
     @BindBool(R.bool.is_land) public boolean isLand;
+    @BindDrawable(R.drawable.empty_detail) public Drawable placeholder;
     public boolean isDark = false;
     private int bylineThreshold = 33;
     //@formatter:on
@@ -167,16 +167,13 @@ public class ArticleDetailFragment extends Fragment implements
             bodyView.setMovementMethod(LinkMovementMethod.getInstance());
             photoView.setMaxHeight((int) (getContext().getResources().getDisplayMetrics().heightPixels * 0.8));
             final String photoUrl = cursor.getString(ArticleLoader.Query.PHOTO_URL);
-            final AtomicBoolean playAnim = new AtomicBoolean();
             Picasso.with(getContext())
                     .load(photoUrl)
-                    .placeholder(new ColorDrawable(primaryDark))
+                    .placeholder(placeholder)
                     .into(photoView, new Callback() {
                         @Override
                         public void onSuccess() {
-                            if (playAnim.get()) {
-                                playAnimation(photoView);
-                            }
+                            playAnimation(photoView);
                             final Bitmap bitmap = ((BitmapDrawable) photoView.getDrawable()).getBitmap();
                             Palette.from(bitmap)
                                     .clearFilters()
@@ -208,8 +205,6 @@ public class ArticleDetailFragment extends Fragment implements
                             Log.e(LOG_TAG, "onError: Couldn't load photo - " + photoUrl);
                         }
                     });
-            playAnim.set(false);
-            shareFab.setVisibility(View.VISIBLE);
             getActivity().supportStartPostponedEnterTransition();
             if (appBarLayout != null) {
                 appBarLayout.setExpanded(false, true);
@@ -220,10 +215,12 @@ public class ArticleDetailFragment extends Fragment implements
     }
 
     private void playAnimation(ImageView photoView) {
-        Animation fadeOut = new AlphaAnimation(0, 1);
-        fadeOut.setInterpolator(new AccelerateInterpolator());
-        fadeOut.setDuration(500);
-        photoView.startAnimation(fadeOut);
+        Animation fadeIn = new AlphaAnimation(0, 1);
+        fadeIn.setInterpolator(new AccelerateInterpolator());
+        fadeIn.setDuration(500);
+        photoView.startAnimation(fadeIn);
+        shareFab.setVisibility(View.VISIBLE);
+        shareFab.startAnimation(fadeIn);
     }
 
     private String formatByLine(String modifiedByline) {
