@@ -6,10 +6,10 @@
     android:layout_height="match_parent">
 
     <ScrollView
-        android:transitionGroup="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        android:transitionGroup="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -20,9 +20,9 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/photo"
+                android:scaleType="centerCrop"
                 tools:src="@drawable/empty_detail"/>
 
             <!-- Overlap top margin and side extra margin is determined programmatically-->
@@ -47,6 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/meta_bar"
                     android:fontFamily="serif"
+                    android:lineSpacingMultiplier="@dimen/body_text_line_spacing_multiplier"
                     android:padding="@dimen/keyline"
                     android:textColor="@color/white"
                     android:textSize="@dimen/article_body_text_size"/>

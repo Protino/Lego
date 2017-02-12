@@ -10,6 +10,10 @@
 
     <style name="BaseTheme" parent="Theme.AppCompat.NoActionBar"/>
 
+    <style name="SplashTheme" parent="BaseTheme">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+    </style>
+
 
     <style name="Toolbar" parent="Widget.AppCompat.Toolbar">
         <item name="android:background">@color/primary</item>
