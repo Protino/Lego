@@ -9,15 +9,17 @@ Lego
 * [Extras](#extras)
 
 ### About
-This project is part of the [Udacity Android Developer Nanodegree] under the name  - *Project P5: Make You App Material*. The application was originally named as *xyz reader*.
+This project is part of the [Udacity Android Developer Nanodegree] under the name  - *Project P5: Make Your App Material*. The application was originally named as *xyz reader*.
 
 
 ```
 Project Overview
- In this project, you will redesign an app to follow the Material Design guidelines and translate a set of static design mocks to a living and breathing app.
+ In this project, you will redesign an app to follow the Material Design guidelines and translate a set of static
+ design mocks to a living and breathing app.
 
 Why this Project?
- This project gives you an opportunity to improve an app’s design, a vital skill for building apps users will love. It also replicates a common developer task of updating and changing an app's design as new standards are released.
+ This project gives you an opportunity to improve an app’s design, a vital skill for building apps users will love.
+ It also replicates a common developer task of updating and changing an app's design as new standards are released.
 
 What Will I Learn?
  Through this project, you will:
