@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.xyzreader">
+          package="com.calgen.udacity.lego">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -29,7 +29,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="vnd.android.cursor.item/vnd.com.example.xyzreader.items"/>
+                <data android:mimeType="vnd.android.cursor.item/vnd.com.calgen.udacity.lego.items"/>
             </intent-filter>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -42,7 +42,7 @@
 
         <provider
             android:name=".data.ItemsProvider"
-            android:authorities="com.example.xyzreader"
+            android:authorities="com.calgen.udacity.lego"
             android:exported="false"/>
 
     </application>

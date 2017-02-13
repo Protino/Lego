@@ -1,4 +1,4 @@
-package com.example.xyzreader.data;
+package com.calgen.udacity.lego.data;
 
 import android.content.Context;
 import android.net.Uri;

@@ -4,7 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "com.example.android.moviesp"
+        applicationId "com.calgen.udacity.lego"
         minSdkVersion 20
         targetSdkVersion 25
         versionCode 1

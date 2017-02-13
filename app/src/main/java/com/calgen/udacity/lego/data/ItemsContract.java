@@ -1,10 +1,10 @@
-package com.example.xyzreader.data;
+package com.calgen.udacity.lego.data;
 
 import android.net.Uri;
 
 public class ItemsContract {
-	public static final String CONTENT_AUTHORITY = "com.example.xyzreader";
-	public static final Uri BASE_URI = Uri.parse("content://com.example.xyzreader");
+	public static final String CONTENT_AUTHORITY = "com.calgen.udacity.lego";
+	public static final Uri BASE_URI = Uri.parse("content://com.calgen.udacity.lego");
 
 	interface ItemsColumns {
 		/** Type: INTEGER PRIMARY KEY AUTOINCREMENT */
@@ -32,8 +32,8 @@ public class ItemsContract {
 	}
 
 	public static class Items implements ItemsColumns {
-		public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.example.xyzreader.items";
-		public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.example.xyzreader.items";
+		public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.calgen.udacity.lego.items";
+		public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.calgen.udacity.lego.items";
 
         public static final String DEFAULT_SORT = PUBLISHED_DATE + " DESC";
 

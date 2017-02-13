@@ -1,13 +1,13 @@
-package com.example.xyzreader.data;
+package com.calgen.udacity.lego.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import static com.example.xyzreader.data.ItemsProvider.Tables;
+import static com.calgen.udacity.lego.data.ItemsProvider.Tables;
 
 public class ItemsDatabase extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "xyzreader.db";
+    private static final String DATABASE_NAME = "lego.db";
     private static final int DATABASE_VERSION = 2;
 
     public ItemsDatabase(Context context) {

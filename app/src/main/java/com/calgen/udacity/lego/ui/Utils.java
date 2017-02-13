@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.example.xyzreader.ui;
+package com.calgen.udacity.lego.ui;
 
 import android.app.Activity;
 import android.content.Context;
@@ -25,8 +25,8 @@ import android.support.v4.view.GravityCompat;
 import android.text.format.DateUtils;
 import android.util.DisplayMetrics;
 
-import com.example.xyzreader.R;
-import com.example.xyzreader.data.ArticleLoader;
+import com.calgen.udacity.lego.R;
+import com.calgen.udacity.lego.data.ArticleLoader;
 
 /**
  * Created by Gurupad Mamadapur on 10/30/2016.

@@ -1,4 +1,4 @@
-package com.example.xyzreader.ui;
+package com.calgen.udacity.lego.ui;
 
 
 import android.database.Cursor;
@@ -17,9 +17,9 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.example.xyzreader.R;
-import com.example.xyzreader.data.ArticleLoader;
-import com.example.xyzreader.data.ItemsContract;
+import com.calgen.udacity.lego.R;
+import com.calgen.udacity.lego.data.ArticleLoader;
+import com.calgen.udacity.lego.data.ItemsContract;
 
 import butterknife.BindBool;
 import butterknife.BindDimen;

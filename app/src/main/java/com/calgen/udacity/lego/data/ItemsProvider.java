@@ -1,5 +1,5 @@
 
-package com.example.xyzreader.data;
+package com.calgen.udacity.lego.data;
 
 import android.content.ContentProvider;
 import android.content.ContentProviderOperation;

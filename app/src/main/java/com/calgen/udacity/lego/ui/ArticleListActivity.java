@@ -1,4 +1,4 @@
-package com.example.xyzreader.ui;
+package com.calgen.udacity.lego.ui;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -27,10 +27,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.xyzreader.R;
-import com.example.xyzreader.data.ArticleLoader;
-import com.example.xyzreader.data.ItemsContract;
-import com.example.xyzreader.data.UpdaterService;
+import com.calgen.udacity.lego.R;
+import com.calgen.udacity.lego.data.ArticleLoader;
+import com.calgen.udacity.lego.data.ItemsContract;
+import com.calgen.udacity.lego.data.UpdaterService;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -204,7 +204,7 @@ public class ArticleListActivity extends AppCompatActivity
 
         @Override
         public int getItemCount() {
-            return mCursor.getCount();
+            return mCursor!=null?mCursor.getCount():0;
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {

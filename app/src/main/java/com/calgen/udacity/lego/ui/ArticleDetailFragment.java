@@ -1,4 +1,4 @@
-package com.example.xyzreader.ui;
+package com.calgen.udacity.lego.ui;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -32,8 +32,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.xyzreader.R;
-import com.example.xyzreader.data.ArticleLoader;
+import com.calgen.udacity.lego.R;
+import com.calgen.udacity.lego.data.ArticleLoader;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 

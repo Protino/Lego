@@ -1,4 +1,4 @@
-package com.example.xyzreader.remote;
+package com.calgen.udacity.lego.remote;
 
 import android.util.Log;
 

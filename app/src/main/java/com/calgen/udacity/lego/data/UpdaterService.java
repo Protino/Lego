@@ -1,4 +1,4 @@
-package com.example.xyzreader.data;
+package com.calgen.udacity.lego.data;
 
 import android.app.IntentService;
 import android.content.ContentProviderOperation;
@@ -9,12 +9,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.RemoteException;
-import android.support.v4.content.ContextCompat;
 import android.text.format.Time;
 import android.util.Log;
 
-import com.example.xyzreader.R;
-import com.example.xyzreader.remote.RemoteEndpointUtil;
+import com.calgen.udacity.lego.remote.RemoteEndpointUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,11 +22,10 @@ import java.util.ArrayList;
 
 public class UpdaterService extends IntentService {
     public static final String BROADCAST_ACTION_STATE_CHANGE
-            = "com.example.xyzreader.intent.action.STATE_CHANGE";
+            = "com.calgen.udacity.lego.intent.action.STATE_CHANGE";
     public static final String EXTRA_REFRESHING
-            = "com.example.xyzreader.intent.extra.REFRESHING";
+            = "com.calgen.udacity.lego.intent.extra.REFRESHING";
     private static final String TAG = "UpdaterService";
-    private static final String LOG_TAG = UpdaterService.class.getSimpleName();
 
 
     public UpdaterService() {
@@ -38,8 +35,6 @@ public class UpdaterService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         Time time = new Time();
-        final int primaryDarkColor = ContextCompat.getColor(this,
-                R.color.primary_dark);
 
         ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo ni = cm.getActiveNetworkInfo();

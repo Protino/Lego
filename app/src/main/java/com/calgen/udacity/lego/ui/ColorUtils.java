@@ -1,4 +1,4 @@
-package com.example.xyzreader.ui;
+package com.calgen.udacity.lego.ui;
 
 import android.graphics.Bitmap;
 import android.support.annotation.ColorInt;
