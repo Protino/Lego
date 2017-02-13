@@ -24,6 +24,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.SparseIntArray;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,6 +36,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindColor;
+import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -53,6 +55,7 @@ public class ArticleListActivity extends AppCompatActivity
     @BindView(R.id.swipe_refresh_layout) public SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.recycler_view) public RecyclerView recyclerView;
     @BindColor(R.color.photo_placeholder) public int placeholderDrawable;
+    @BindInt(R.integer.list_column_count) public int columnCount;
     //@formatter:on
 
     private boolean isRefreshing = false;
@@ -125,8 +128,16 @@ public class ArticleListActivity extends AppCompatActivity
         Adapter adapter = new Adapter(this, cursor);
         adapter.setHasStableIds(true);
         recyclerView.setAdapter(adapter);
-        int columnCount = getResources().getInteger(R.integer.list_column_count);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL));
+        recyclerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (recyclerView.getChildCount() > 0) {
+                    recyclerView.setVisibility(View.VISIBLE);
+                    recyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+            }
+        });
     }
 
     @Override
@@ -204,7 +215,7 @@ public class ArticleListActivity extends AppCompatActivity
 
         @Override
         public int getItemCount() {
-            return mCursor!=null?mCursor.getCount():0;
+            return mCursor != null ? mCursor.getCount() : 0;
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
@@ -231,5 +242,4 @@ public class ArticleListActivity extends AppCompatActivity
             }
         }
     }
-
 }

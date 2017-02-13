@@ -53,10 +53,8 @@ public class ArticleDetailActivity extends AppCompatActivity
         ButterKnife.bind(this);
         setUpCaretMargin();
         setUpPager();
-        if (savedInstanceState == null) {
-            if (getIntent() != null && getIntent().getData() != null) {
-                startId = ItemsContract.Items.getItemId(getIntent().getData());
-            }
+        if (savedInstanceState == null && getIntent() != null && getIntent().getData() != null) {
+            startId = ItemsContract.Items.getItemId(getIntent().getData());
         }
         supportPostponeEnterTransition();
     }
@@ -122,6 +120,8 @@ public class ArticleDetailActivity extends AppCompatActivity
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        // ignore
+        // TODO: 13-Feb-17 Add animations
     }
 
     @Override

@@ -48,7 +48,7 @@ import butterknife.OnClick;
 /**
  * A fragment representing a single Article detail screen. This fragment is
  * either contained in a {@link ArticleListActivity} in two-pane mode (on
- * tablets) or a {@link ArticleDetailActivity} on handsets.
+ * tablets !Yet-To be implemented! ) or a {@link ArticleDetailActivity} on handsets.
  */
 public class ArticleDetailFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
@@ -85,6 +85,7 @@ public class ArticleDetailFragment extends Fragment implements
      * fragment (e.g. upon screen orientation changes).
      */
     public ArticleDetailFragment() {
+        //required
     }
 
     public static ArticleDetailFragment newInstance(long itemId) {
@@ -160,6 +161,7 @@ public class ArticleDetailFragment extends Fragment implements
             return;
         }
         if (cursor != null) {
+            rootView.setAlpha(0);
             rootView.setVisibility(View.VISIBLE);
             titleView.setText(cursor.getString(ArticleLoader.Query.TITLE));
             bylineView.setText(formatByLine(Utils.getModifiedByline(cursor, getContext())));
@@ -190,11 +192,10 @@ public class ArticleDetailFragment extends Fragment implements
                                                     palette.getDarkMutedColor(primaryDark),
                                                     true, 0.7f); //70% Darker
                                             metaBar.setBackgroundColor(extraDarkMutedColor);
-                                            if (isLand && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                                if (getActivity() != null) {
-                                                    (getActivity()).getWindow()
-                                                            .setStatusBarColor(extraDarkMutedColor);
-                                                }
+                                            if (isLand && getActivity() != null
+                                                    && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                                (getActivity()).getWindow()
+                                                        .setStatusBarColor(extraDarkMutedColor);
                                             }
                                         }
                                     });
@@ -206,6 +207,7 @@ public class ArticleDetailFragment extends Fragment implements
                         }
                     });
             getActivity().supportStartPostponedEnterTransition();
+            rootView.animate().alpha(1).setDuration(300);
             if (appBarLayout != null) {
                 appBarLayout.setExpanded(false, true);
             }

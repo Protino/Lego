@@ -97,21 +97,20 @@ public class ColorUtils {
      * @param lightnessMultiplier the amount to modify the color e.g. 0.1f will alter it by 10%
      * @return the adjusted color
      */
-    public static
     @ColorInt
-    int scrimify(@ColorInt int color,
-                 boolean isDark,
-                 @FloatRange(from = 0f, to = 1f) float lightnessMultiplier) {
+    public static int scrimify(@ColorInt int color,
+                               boolean isDark,
+                               @FloatRange(from = 0f, to = 1f) float lightnessMultiplier) {
         float[] hsl = new float[3];
         android.support.v4.graphics.ColorUtils.colorToHSL(color, hsl);
-
+        float multiplier = lightnessMultiplier;
         if (!isDark) {
-            lightnessMultiplier += 1f;
+            multiplier += 1f;
         } else {
-            lightnessMultiplier = 1f - lightnessMultiplier;
+            multiplier = 1f - lightnessMultiplier;
         }
 
-        hsl[2] = constrain(0f, 1f, hsl[2] * lightnessMultiplier);
+        hsl[2] = constrain(0f, 1f, hsl[2] * multiplier);
         return android.support.v4.graphics.ColorUtils.HSLToColor(hsl);
     }
 
