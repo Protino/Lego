@@ -1,4 +1,4 @@
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e1d78944ac7b4b6582a42a3fee4d6fe8)](https://www.codacy.com/app/gurupadmamadapur/Lego?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Protino/Lego&amp;utm_campaign=Badge_Grade)
+﻿[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e1d78944ac7b4b6582a42a3fee4d6fe8)](https://www.codacy.com/app/gurupadmamadapur/Lego?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Protino/Lego&amp;utm_campaign=Badge_Grade)
 
 Lego
 ====
